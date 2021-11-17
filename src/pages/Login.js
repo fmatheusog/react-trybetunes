@@ -1,4 +1,8 @@
 import { React, Component } from 'react';
+import { Redirect } from 'react-router-dom';
+// import { createUser } from '../services/userAPI';
+
+import LoginForm from '../components/LoginForm';
 
 class Login extends Component {
   constructor() {
@@ -7,7 +11,11 @@ class Login extends Component {
     this.state = {
       username: '',
       loginButtonDisabled: true,
+      isLogged: false,
     };
+
+    this.handleUserInputChange = this.handleUserInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateUserInput = () => {
@@ -31,21 +39,28 @@ class Login extends Component {
     }, () => this.validateUserInput());
   }
 
+  handleSubmit = async () => {
+    this.setState({
+      isLogged: true,
+    });
+  }
+
   render() {
-    const { username, loginButtonDisabled } = this.state;
+    const { username, loginButtonDisabled, isLogged } = this.state;
+    const props = {
+      username,
+      handleSubmit: this.handleSubmit,
+      handleUserInputChange: this.handleUserInputChange,
+      loginButtonDisabled,
+    };
 
     return (
-      <div data-testid="page-login">
-        Username:
-        <input
-          type="text"
-          name="username"
-          id="username"
-          data-testid="login-name-input"
-          onChange={ this.handleUserInputChange }
-          value={ username }
-        />
-        <button type="submit" disabled={ loginButtonDisabled }>Entrar</button>
+      <div data-testid="page-login" id="page-login">
+        {
+          isLogged
+            ? <Redirect to="/search" />
+            : <LoginForm { ...props } />
+        }
       </div>
     );
   }
