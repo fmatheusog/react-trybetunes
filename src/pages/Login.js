@@ -1,28 +1,51 @@
 import { React, Component } from 'react';
 import { Redirect } from 'react-router-dom';
-// import { createUser } from '../services/userAPI';
+import { createUser } from '../services/userAPI';
 
-import LoginForm from '../components/LoginForm';
+import Loading from '../components/Loading';
 
 class Login extends Component {
   constructor() {
     super();
 
     this.state = {
-      username: '',
+      name: '',
       loginButtonDisabled: true,
       isLogged: false,
+      loading: false,
     };
 
     this.handleUserInputChange = this.handleUserInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  handleUserInputChange = (ev) => {
+    this.setState({
+      name: ev.target.value,
+    }, () => this.validateUserInput());
+  }
+
+  async handleSubmit() {
+    const { name } = this.state;
+
+    this.setState({
+      loading: true,
+    });
+
+    const result = await createUser({ name });
+
+    if (result === 'OK') {
+      this.setState({
+        isLogged: true,
+      });
+    }
+  }
+
   validateUserInput = () => {
-    const { username } = this.state;
+    const { name } = this.state;
     const inputMinLen = 3;
 
-    if (username.length > inputMinLen) {
+    if (name.length >= inputMinLen) {
       this.setState({
         loginButtonDisabled: false,
       });
@@ -33,34 +56,32 @@ class Login extends Component {
     }
   }
 
-  handleUserInputChange = (ev) => {
-    this.setState({
-      username: ev.target.value,
-    }, () => this.validateUserInput());
-  }
-
-  handleSubmit = async () => {
-    this.setState({
-      isLogged: true,
-    });
-  }
-
   render() {
-    const { username, loginButtonDisabled, isLogged } = this.state;
-    const props = {
-      username,
-      handleSubmit: this.handleSubmit,
-      handleUserInputChange: this.handleUserInputChange,
-      loginButtonDisabled,
-    };
+    const { name, loginButtonDisabled, loading, isLogged } = this.state;
 
     return (
       <div data-testid="page-login" id="page-login">
-        {
-          isLogged
-            ? <Redirect to="/search" />
-            : <LoginForm { ...props } />
-        }
+        {loading ? <Loading /> : (
+          <form>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              data-testid="login-name-input"
+              onChange={ this.handleUserInputChange }
+              value={ name }
+            />
+            <button
+              data-testid="login-submit-button"
+              type="submit"
+              disabled={ loginButtonDisabled }
+              onClick={ this.handleSubmit }
+            >
+              Entrar
+            </button>
+          </form>
+        )}
+        { isLogged && <Redirect to="/search" /> }
       </div>
     );
   }

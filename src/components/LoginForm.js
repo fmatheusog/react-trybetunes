@@ -21,6 +21,7 @@ class LoginForm extends Component {
           value={ username }
         />
         <button
+          data-testid="login-submit-button"
           type="submit"
           disabled={ loginButtonDisabled }
           onClick={ handleSubmit }
