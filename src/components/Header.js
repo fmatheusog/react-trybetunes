@@ -10,9 +10,15 @@ class Header extends Component {
       loading: true,
       user: '',
     };
+
+    this.fetchUser = this.fetchUser.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.fetchUser();
+  }
+
+  async fetchUser() {
     const user = await getUser();
 
     this.setState({
