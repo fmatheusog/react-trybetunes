@@ -64,7 +64,7 @@ class Search extends Component {
       this.setState({
         albums: result,
         loading: false,
-        artistResult: `Resultado de álbuns de ${artistName}:`,
+        artistResult: `Resultado de álbuns de: ${artistName}`,
         searchInput: '',
       });
     }
