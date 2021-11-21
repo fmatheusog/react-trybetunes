@@ -56,10 +56,6 @@ class MusicCard extends React.Component {
       this.setState({
         favorite: true,
       });
-    } else {
-      this.setState({
-        favorite: false,
-      });
     }
   }
 
