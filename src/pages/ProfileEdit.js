@@ -37,7 +37,8 @@ export default function ProfileEdit() {
     setImage(e.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
 
     await userApi.updateUser({
@@ -62,49 +63,51 @@ export default function ProfileEdit() {
   }, [name, email, description, image]);
 
   return (
-    <>
+    <div data-testid="page-profile-edit">
       {redirect && <Redirect to="/profile" />}
       {loading ? <Loading /> : (
-        <div data-testid="page-profile-edit">
+        <>
           <Header />
-          <input
-            data-testid="edit-input-name"
-            type="text"
-            id="name"
-            onChange={ handleNameChange }
-            value={ name }
-          />
-          <input
-            data-testid="edit-input-email"
-            type="text"
-            id="email"
-            onChange={ handleEmailChange }
-            value={ email }
-          />
-          <input
-            data-testid="edit-input-description"
-            type="text"
-            id="description"
-            onChange={ handleDescriptionChange }
-            value={ description }
-          />
-          <input
-            data-testid="edit-input-image"
-            type="text"
-            id="image"
-            onChange={ handleImageChange }
-            value={ image }
-          />
-          <button
-            data-testid="edit-button-save"
-            disabled={ isDisabled }
-            type="submit"
-            onClick={ handleSubmit }
-          >
-            Salvar
-          </button>
-        </div>
+          <form data-testid="profile-edit">
+            <input
+              data-testid="edit-input-name"
+              type="text"
+              id="name"
+              onChange={ handleNameChange }
+              value={ name }
+            />
+            <input
+              data-testid="edit-input-email"
+              type="text"
+              id="email"
+              onChange={ handleEmailChange }
+              value={ email }
+            />
+            <input
+              data-testid="edit-input-description"
+              type="text"
+              id="description"
+              onChange={ handleDescriptionChange }
+              value={ description }
+            />
+            <input
+              data-testid="edit-input-image"
+              type="text"
+              id="image"
+              onChange={ handleImageChange }
+              value={ image }
+            />
+            <button
+              data-testid="edit-button-save"
+              disabled={ isDisabled }
+              type="submit"
+              onClick={ handleSubmit }
+            >
+              Salvar
+            </button>
+          </form>
+        </>
       )}
-    </>
+    </div>
   );
 }
