@@ -65,7 +65,7 @@ export default function ProfileEdit() {
     <>
       {redirect && <Redirect to="/profile" />}
       {loading ? <Loading /> : (
-        <>
+        <div data-testid="page-profile-edit">
           <Header />
           <input
             data-testid="edit-input-name"
@@ -103,7 +103,7 @@ export default function ProfileEdit() {
           >
             Salvar
           </button>
-        </>
+        </div>
       )}
     </>
   );
