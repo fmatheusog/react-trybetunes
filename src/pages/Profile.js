@@ -52,9 +52,7 @@ class Profile extends Component {
               src={ image }
               alt={ name }
             />
-            <Link to="/profile/edit">
-              Editar perfil
-            </Link>
+            <Link to="/profile/edit">Editar perfil</Link>
             <h3>Nome</h3>
             <span>{ name }</span>
             <h3>E-mail</h3>
