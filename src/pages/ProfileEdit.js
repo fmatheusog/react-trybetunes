@@ -21,22 +21,6 @@ export default function ProfileEdit() {
     setImage(user.image);
   };
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-
-  const handleImageChange = (e) => {
-    setImage(e.target.value);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -73,28 +57,28 @@ export default function ProfileEdit() {
               data-testid="edit-input-name"
               type="text"
               id="name"
-              onChange={ handleNameChange }
+              onChange={ (e) => setName(e.target.value) }
               value={ name }
             />
             <input
               data-testid="edit-input-email"
               type="text"
               id="email"
-              onChange={ handleEmailChange }
+              onChange={ (e) => setEmail(e.target.value) }
               value={ email }
             />
             <input
               data-testid="edit-input-description"
               type="text"
               id="description"
-              onChange={ handleDescriptionChange }
+              onChange={ (e) => setDescription(e.target.value) }
               value={ description }
             />
             <input
               data-testid="edit-input-image"
               type="text"
               id="image"
-              onChange={ handleImageChange }
+              onChange={ (e) => setImage(e.target.value) }
               value={ image }
             />
             <button
